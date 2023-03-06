@@ -43,7 +43,7 @@ class Emoji extends React.PureComponent {
     } else {
       const filename  = (autoPlayGif || hovered) ? url : static_url;
       const shortCode = `:${emoji}:`;
-      const title = domain ? `:${emoji}@${domain}:` : `:${emoji}:`
+      const title = domain ? `:${emoji}@${domain}:` : `:${emoji}:`;
 
       return (
         <img
@@ -71,6 +71,7 @@ class Reaction extends ImmutablePureComponent {
     removeReaction: PropTypes.func.isRequired,
     emojiMap: ImmutablePropTypes.map.isRequired,
     style: PropTypes.object,
+    disabled: PropTypes.bool,
   };
 
   state = {

@@ -8,10 +8,11 @@ class ActivityPub::EmojiReactSerializer < ActivityPub::Serializer
 
   def id
     [ActivityPub::TagManager.instance.uri_for(object.account), '#emoji_reacts/', object.id].join
+    #[ActivityPub::TagManager.instance.uri_for(object.account), '#likes/', object.id].join
   end
 
   def type
-    'EmojiReact'
+    'Like'
   end
 
   def actor
@@ -24,5 +25,9 @@ class ActivityPub::EmojiReactSerializer < ActivityPub::Serializer
 
   def content
     object.custom_emoji.present? ? ":#{object.name}:" : object.name
+  end
+
+  def virtual_tags
+    [object.custom_emoji]
   end
 end
