@@ -430,13 +430,14 @@ export function fetchReactions(id) {
     dispatch(fetchReactionsRequest(id));
 
     api(getState).get(`/api/v1/statuses/${id}/reacted_by`).then(response => {
-      dispatch(importFetchedAccounts(response.data));
+      dispatch(importFetchedAccounts(response.data.map((er) => er.account)));
       dispatch(fetchReactionsSuccess(id, response.data));
     }).catch(error => {
       dispatch(fetchReactionsFail(id, error));
     });
   };
 }
+
 
 export function fetchReactionsRequest(id) {
   return {

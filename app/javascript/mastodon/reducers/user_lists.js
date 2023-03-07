@@ -136,7 +136,8 @@ export default function userLists(state = initialState, action) {
   case FAVOURITES_FETCH_SUCCESS:
     return state.setIn(['favourited_by', action.id], ImmutableList(action.accounts.map(item => item.id)));
   case REACTIONS_FETCH_SUCCESS:
-    return state.setIn(['reacted_by', action.id], ImmutableList(action.accounts.map(item => item.id)));
+    //return state.setIn(['reacted_by', action.id], ImmutableList(action.accounts.map(item => item.id)));
+        return state.setIn(['reacted_by', action.id], ImmutableList(action.accounts));
   case NOTIFICATIONS_UPDATE:
     return action.notification.type === 'follow_request' ? normalizeFollowRequest(state, action.notification) : state;
   case FOLLOW_REQUESTS_FETCH_SUCCESS:

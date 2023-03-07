@@ -9,28 +9,26 @@ class Api::V1::Statuses::ReactedByAccountsController < Api::BaseController
 
   def index
     @accounts = load_accounts
-    render json: @accounts, each_serializer: REST::AccountSerializer
+    render json: @accounts, each_serializer: REST::EmojiReactionAccountSerializer
   end
 
   private
 
   def load_accounts
     scope = default_accounts
-    scope = scope.where.not(id: current_account.excluded_from_timeline_account_ids) unless current_account.nil?
-    scope.merge(paginated_reactions).to_a
+    # scope = scope.where.not(account_id: current_account.excluded_from_timeline_account_ids) unless current_account.nil?
+    scope.merge(paginated_emoji_reactions).to_a
   end
 
   def default_accounts
-    Account
-      .without_suspended
-      .includes(:reactions, :account_stat)
-      .references(:reactions)
-      .where(reactions: { status_id: @status.id })
+    Reaction
+      .where(status_id: @status.id)
+    #.where(account: { suspended_at: nil })
   end
 
-  def paginated_reactions
+  def paginated_emoji_reactions
     Reaction.paginate_by_max_id(
-      limit_param(DEFAULT_ACCOUNTS_LIMIT),
+      limit_param(1000), #limit_param(DEFAULT_ACCOUNTS_LIMIT),
       params[:max_id],
       params[:since_id]
     )
@@ -41,23 +39,19 @@ class Api::V1::Statuses::ReactedByAccountsController < Api::BaseController
   end
 
   def next_path
-    if records_continue?
-      api_v1_status_reacted_by_index_url pagination_params(max_id: pagination_max_id)
-    end
+    api_v1_status_reacted_by_index_url pagination_params(max_id: pagination_max_id) if records_continue?
   end
 
   def prev_path
-    unless @accounts.empty?
-      api_v1_status_reacted_by_index_url pagination_params(since_id: pagination_since_id)
-    end
+    api_v1_status_reacted_by_index_url pagination_params(since_id: pagination_since_id) unless @accounts.empty?
   end
 
   def pagination_max_id
-    @accounts.last.reactions.last.id
+    @accounts.last.id
   end
 
   def pagination_since_id
-    @accounts.first.reactions.first.id
+    @accounts.first.id
   end
 
   def records_continue?

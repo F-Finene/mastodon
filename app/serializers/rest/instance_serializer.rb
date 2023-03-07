@@ -11,7 +11,7 @@ class REST::InstanceSerializer < ActiveModel::Serializer
 
   attributes :domain, :title, :version, :source_url, :description,
              :usage, :thumbnail, :languages, :configuration,
-             :registrations
+             :registrations, :fedibird_capabilities
 
   has_one :contact, serializer: ContactSerializer
   has_many :rules, serializer: REST::RuleSerializer
@@ -86,6 +86,16 @@ class REST::InstanceSerializer < ActiveModel::Serializer
       approval_required: Setting.registrations_mode == 'approved',
       message: registrations_enabled? ? nil : registrations_message,
     }
+  end
+  # for third party apps
+  def fedibird_capabilities
+    capabilities = [
+      :emoji_reaction,
+    ]
+
+    capabilities << :profile_search unless Chewy.enabled?
+
+    capabilities
   end
 
   private
