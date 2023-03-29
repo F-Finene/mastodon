@@ -451,6 +451,9 @@ Rails.application.routes.draw do
           resource :reaction, only: :create
           post :unreaction, to: 'reactions#destroy'
 
+          resource :emoji_reactions, only: :create
+          post :emoji_unreaction, to: 'emoji_reactions#destroy'
+
           resource :bookmark, only: :create
           post :unbookmark, to: 'bookmarks#destroy'
 
