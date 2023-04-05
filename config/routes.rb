@@ -451,7 +451,7 @@ Rails.application.routes.draw do
           resource :reaction, only: :create
           post :unreaction, to: 'reactions#destroy'
 
-          resource :emoji_reactions, only: :create
+          resources :emoji_reactions, only: [:create, :update, :destroy], constraints: { id: /[^\/]+/ }
           post :emoji_unreaction, to: 'emoji_reactions#destroy'
 
           resource :bookmark, only: :create
