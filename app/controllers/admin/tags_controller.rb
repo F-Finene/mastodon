@@ -7,16 +7,16 @@ module Admin
     def show
       authorize @tag, :show?
 
-      @time_period = (6.days.ago.to_date...Time.now.utc.to_date)
+      @time_period = (6.days.ago.to_date...Time.now.to_date)
     end
 
     def update
       authorize @tag, :update?
 
-      if @tag.update(tag_params.merge(reviewed_at: Time.now.utc))
+      if @tag.update(tag_params.merge(reviewed_at: Time.utc))
         redirect_to admin_tag_path(@tag.id), notice: I18n.t('admin.tags.updated_msg')
       else
-        @time_period = (6.days.ago.to_date...Time.now.utc.to_date)
+        @time_period = (6.days.ago.to_date...Time.now.to_date)
 
         render :show
       end

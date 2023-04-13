@@ -55,11 +55,11 @@ class Trends::Base
     raise NotImplementedError
   end
 
-  def recently_used_ids(at_time = Time.now.utc)
+  def recently_used_ids(at_time = Time.now)
     redis.smembers(used_key(at_time)).map(&:to_i)
   end
 
-  def record_used_id(id, at_time = Time.now.utc)
+  def record_used_id(id, at_time = Time.now)
     redis.sadd(used_key(at_time), id)
     redis.expire(used_key(at_time), 1.day.seconds)
   end

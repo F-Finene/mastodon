@@ -7,11 +7,11 @@ class Trends::Tags < Trends::Base
     threshold: 5,
     review_threshold: 3,
     max_score_cooldown: 2.days.freeze,
-    max_score_halflife: 4.hours.freeze,
+    max_score_halflife: 8.hours.freeze,
     decay_threshold: 1,
   }
 
-  def register(status, at_time = Time.now.utc)
+  def register(status, at_time = Time.now)
     return unless !status.reblog? && status.public_visibility? && !status.account.silenced?
 
     status.tags.each do |tag|
@@ -19,12 +19,12 @@ class Trends::Tags < Trends::Base
     end
   end
 
-  def add(tag, account_id, at_time = Time.now.utc)
+  def add(tag, account_id, at_time = Time.now)
     tag.history.add(account_id, at_time)
     record_used_id(tag.id, at_time)
   end
 
-  def refresh(at_time = Time.now.utc)
+  def refresh(at_time = Time.now)
     tags = Tag.where(id: (recently_used_ids(at_time) + currently_trending_ids(false, -1)).uniq)
     calculate_scores(tags, at_time)
   end

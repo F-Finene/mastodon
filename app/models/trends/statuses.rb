@@ -6,7 +6,7 @@ class Trends::Statuses < Trends::Base
   self.default_options = {
     threshold: 5,
     review_threshold: 3,
-    score_halflife: 2.hours.freeze,
+    score_halflife: 8.hours.freeze,
     decay_threshold: 0.3,
   }
 
@@ -45,11 +45,11 @@ class Trends::Statuses < Trends::Base
     end
   end
 
-  def register(status, at_time = Time.now.utc)
+  def register(status, at_time = Time.now)
     add(status.proper, status.account_id, at_time) if eligible?(status.proper)
   end
 
-  def add(status, _account_id, at_time = Time.now.utc)
+  def add(status, _account_id, at_time = Time.now)
     record_used_id(status.id, at_time)
   end
 
@@ -57,7 +57,7 @@ class Trends::Statuses < Trends::Base
     Query.new(key_prefix, klass)
   end
 
-  def refresh(at_time = Time.now.utc)
+  def refresh(at_time = Time.now)
     statuses = Status.where(id: (recently_used_ids(at_time) + StatusTrend.pluck(:status_id)).uniq).includes(:status_stat, :account)
     calculate_scores(statuses, at_time)
   end
