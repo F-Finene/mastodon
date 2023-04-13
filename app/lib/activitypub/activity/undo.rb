@@ -139,7 +139,6 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
         if equals_or_includes?(tag['type'], 'Emoji')
           custom_emoji_parser = ActivityPub::Parser::CustomEmojiParser.new(tag)
           emoji = CustomEmoji.find_by(shortcode: custom_emoji_parser.shortcode, domain: custom_emoji_parser.domain)
-
           if @account.custom_emoji_reacted?(status, emoji)
             reaction = status.reactions.where(account: @account, custom_emoji: emoji).first
             reaction&.destroy
