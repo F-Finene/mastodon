@@ -91,6 +91,8 @@ class REST::InstanceSerializer < ActiveModel::Serializer
   def fedibird_capabilities
     capabilities = [
       :emoji_reaction,
+      :enable_wide_emoji,
+      :enable_wide_emoji_reaction,
     ]
 
     capabilities << :profile_search unless Chewy.enabled?
