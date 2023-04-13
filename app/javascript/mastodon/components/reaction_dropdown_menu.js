@@ -124,7 +124,7 @@ export default class ReactionDropdown extends React.PureComponent {
 
   handleClick = ({ type }) => {
     if (this.props.status.get('reacted')) {
-      const reaction = this.props.status.get('reactions').find(x => x.get('me'));
+      const reaction = this.props.status.get('emoji_reactions').find(x => x.get('me'));
       this.props.onReaction(this.props.status, reaction.get('name'));
     }
 

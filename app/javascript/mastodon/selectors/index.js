@@ -37,8 +37,8 @@ export const makeGetStatus = () => {
       (state, { id }) => state.getIn(['statuses', state.getIn(['statuses', id, 'reblog'])]),
       (state, { id }) => state.getIn(['accounts', state.getIn(['statuses', id, 'account'])]),
       (state, { id }) => state.getIn(['accounts', state.getIn(['statuses', state.getIn(['statuses', id, 'reblog']), 'account'])]),
-      (state, { id }) => state.getIn(['statuses', id, 'reactions'])?.flatMap(reaction => reaction.get('users')).map(user => state.getIn(['accounts', user.get('id')])),
-      (state, { id }) => state.getIn(['statuses', state.getIn(['statuses', id, 'reblog']), 'reactions'])?.flatMap(reaction => reaction.get('users')).map(user => state.getIn(['accounts', user.get('id')])),
+      (state, { id }) => state.getIn(['statuses', id, 'emoji_reactions'])?.flatMap(reaction => reaction.get('users')).map(user => state.getIn(['accounts', user.get('id')])),
+      (state, { id }) => state.getIn(['statuses', state.getIn(['statuses', id, 'reblog']), 'emoji_reactions'])?.flatMap(reaction => reaction.get('users')).map(user => state.getIn(['accounts', user.get('id')])),
       getFilters,
     ],
 
@@ -65,8 +65,8 @@ export const makeGetStatus = () => {
         }
       }
       let reactions = statusReblog
-        ? statusReblog.get('reactions')
-        : statusBase.get('reactions');
+        ? statusReblog.get('emoji_reactions')
+        : statusBase.get('emoji_reactions');
       let users = statusReblog
         ? reactedUsersReblog
         : reactedUsers;
@@ -79,14 +79,14 @@ export const makeGetStatus = () => {
         }
       }
       if (statusReblog) {
-        statusReblog = statusReblog.set('reactions', reactions);
+        statusReblog = statusReblog.set('emoji_reactions', reactions);
       }
       return statusBase.withMutations(map => {
         map.set('reblog', statusReblog);
         map.set('account', accountBase);
         map.set('matched_filters', filtered);
         if (!statusReblog) {
-          map.set('reactions', reactions);
+          map.set('emoji_reactions', reactions);
         }
       });
     },

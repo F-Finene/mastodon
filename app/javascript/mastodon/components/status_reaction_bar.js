@@ -179,7 +179,7 @@ class StatusReactionBar extends ImmutablePureComponent {
     const status = this.props.status;
     const signedIn = this.props.signedIn;
 
-    const reactions = status.get('reactions');
+    const reactions = status.get('emoji_reactions');
     const visibleReactions = reactions.filter(x => x.get('count') > 0);
 
     const styles = visibleReactions.map(reaction => ({

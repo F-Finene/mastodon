@@ -13,13 +13,13 @@ import StatusList from 'mastodon/components/status_list';
 import Column from 'mastodon/features/ui/components/column';
 
 const messages = defineMessages({
-  heading: { id: 'column.reactions', defaultMessage: 'Reacted posts' },
+  heading: { id: 'column.emoji_reactions', defaultMessage: 'Reacted posts' },
 });
 
 const mapStateToProps = state => ({
-  statusIds: state.getIn(['status_lists', 'reactions', 'items']),
-  isLoading: state.getIn(['status_lists', 'reactions', 'isLoading'], true),
-  hasMore: !!state.getIn(['status_lists', 'reactions', 'next']),
+  statusIds: state.getIn(['status_lists', 'emoji_reactions', 'items']),
+  isLoading: state.getIn(['status_lists', 'emoji_reactions', 'isLoading'], true),
+  hasMore: !!state.getIn(['status_lists', 'emoji_reactions', 'next']),
 });
 
 export default @connect(mapStateToProps)

@@ -11,7 +11,7 @@ export const REACTED_STATUSES_EXPAND_FAIL    = 'REACTED_STATUSES_EXPAND_FAIL';
 
 export function fetchReactedStatuses() {
   return (dispatch, getState) => {
-    if (getState().getIn(['status_lists', 'reactions', 'isLoading'])) {
+    if (getState().getIn(['status_lists', 'emoji_reactions', 'isLoading'])) {
       return;
     }
 
@@ -53,9 +53,9 @@ export function fetchReactedStatusesFail(error) {
 
 export function expandReactedStatuses() {
   return (dispatch, getState) => {
-    const url = getState().getIn(['status_lists', 'reactions', 'next'], null);
+    const url = getState().getIn(['status_lists', 'emoji_reactions', 'next'], null);
 
-    if (url === null || getState().getIn(['status_lists', 'reactions', 'isLoading'])) {
+    if (url === null || getState().getIn(['status_lists', 'emoji_reactions', 'isLoading'])) {
       return;
     }
 

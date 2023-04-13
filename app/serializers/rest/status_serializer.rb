@@ -27,7 +27,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
   has_many :ordered_mentions, key: :mentions
   has_many :tags
   has_many :emojis, serializer: REST::CustomEmojiSerializer
-  has_many :reactions, serializer: REST::StatusReactionSerializer
+  #has_many :reactions, serializer: REST::StatusReactionSerializer
   has_many :emoji_reactions, serializer: REST::StatusEmojiReactionSerializer
 
   has_one :preview_card, key: :card, serializer: REST::PreviewCardSerializer
@@ -100,9 +100,9 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
-  def reactions
-    object.reactions_hash(current_user&.account)
-  end
+  #  def reactions
+  #  object.reactions_hash(current_user&.account)
+  #end
   def emoji_reactions
     object.reactions_hash(current_user&.account)
   end

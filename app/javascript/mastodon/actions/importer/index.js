@@ -84,7 +84,7 @@ export function importFetchedStatuses(statuses) {
         pushUnique(polls, normalizePoll(status.poll));
       }
 
-      status.reactions.flatMap(reaction => reaction.users).forEach(user => pushUnique(accounts, user));
+      status.emoji_reactions.flatMap(reaction => reaction.users).forEach(user => pushUnique(accounts, user));
     }
 
     statuses.forEach(processStatus);
