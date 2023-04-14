@@ -9,7 +9,7 @@ class REST::StatusEmojiReactionSerializer < ActiveModel::Serializer
   attribute :url, if: :custom_emoji?
   attribute :static_url, if: :custom_emoji?
   attribute :domain, if: :custom_emoji?
-
+  has_many :users, serializer: REST::AccountSerializer
   def count
     object.respond_to?(:count) ? object.count : 0
   end
