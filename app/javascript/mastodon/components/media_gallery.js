@@ -94,6 +94,21 @@ class Item extends React.PureComponent {
     if (size === 4 || (size === 3 && index > 0)) {
       height = 50;
     }
+    if (size === 5 || size === 6) {
+      height = 33;
+    }
+    if (size === 7 || size === 8 ) {
+      height = 25;
+    }
+     if (size === 9 || size === 10 ) {
+      height = 20;
+    }
+    if ( size === 11 || size === 12) {
+      height = 16;
+    }
+    if ((size === 5 && index === 4) || (size === 7 && index === 6) || (size === 9 && index === 8) || (size === 11 && index === 10)){
+      width = 100;
+    }
 
     if (size === 2) {
       if (index === 0) {
@@ -126,6 +141,21 @@ class Item extends React.PureComponent {
         bottom = '2px';
       } else {
         top = '2px';
+      }
+    } else {
+      if (index % 2 === 0) {
+        right = '2px';
+      }
+
+      if (index % 2 === 1) {
+        left = '2px';
+      }
+
+      if (index >= 2) {
+        top = '2px';
+      }
+      if (index < size - 1) {
+        bottom = '2px';
       }
     }
 
@@ -328,14 +358,14 @@ class MediaGallery extends React.PureComponent {
     } else {
       style.height = height;
     }
-
-    const size     = media.take(4).size;
+style.height+30;
+    const size     = media.take(12).size;
     const uncached = media.every(attachment => attachment.get('type') === 'unknown');
 
     if (standalone && this.isFullSizeEligible()) {
       children = <Item standalone autoplay={autoplay} onClick={this.handleClick} attachment={media.get(0)} displayWidth={width} visible={visible} />;
     } else {
-      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} size={size} displayWidth={width} visible={visible || uncached} />);
+      children = media.take(12).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} size={size} displayWidth={width} visible={visible || uncached} />);
     }
 
     if (uncached) {

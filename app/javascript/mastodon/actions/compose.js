@@ -275,7 +275,7 @@ export function uploadCompose(files) {
     dispatch(uploadComposeRequest());
 
     for (const [i, f] of Array.from(files).entries()) {
-      if (media.size + i > 3) break;
+      if (media.size + i >= 4) break;
 
       resizeImage(f).then(file => {
         const data = new FormData();
