@@ -41,6 +41,10 @@ class Reaction < ApplicationRecord
     account_ids = Reaction.where(status_id: status_id, name: name, custom_emoji_id: custom_emoji_id).select(:account_id)
     Account.where(id: account_ids).limit(11)
   end
+  def account_ids
+    account_ids  = Reaction.where(status_id: status_id, name: name, custom_emoji_id: custom_emoji_id).pluck(:account_id).map(&:to_s)
+    return account_ids
+  end
 
   private
 
