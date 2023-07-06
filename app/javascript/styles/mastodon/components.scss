@@ -1824,8 +1824,8 @@ a.account__display-name {
   font-weight: 500;
 }
 .display-name__html img.emojione{
-  width: 16px;
-  height: 16px;
+  width: 16px !important;
+  height: 16px !important;
   margin: -1px 0 0;
 }
 .status__relative-time,
@@ -7839,13 +7839,18 @@ noscript {
     width: 60px;
     height: auto;
   }
-
+  .emojione.custom-emoji {
+    width: auto;
+    width: 100px;
+    height: auto;
+  }
+  
   &__emoji {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 16px;
-    width: 80px;
+    width: auto;
 
     &__code {
       margin-top: 6px;

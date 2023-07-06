@@ -154,7 +154,7 @@ class Request
   end
 
   module ClientLimit
-    def truncated_body(limit = 1.megabyte)
+    def truncated_body(limit = 2.megabyte)
       if charset.nil?
         encoding = Encoding::BINARY
       else
@@ -177,7 +177,7 @@ class Request
       contents
     end
 
-    def body_with_limit(limit = 1.megabyte)
+    def body_with_limit(limit = 2.megabyte)
       raise Mastodon::LengthValidationError if content_length.present? && content_length > limit
 
       contents = truncated_body(limit)

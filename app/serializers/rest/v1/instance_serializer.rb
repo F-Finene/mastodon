@@ -83,6 +83,10 @@ class REST::V1::InstanceSerializer < ActiveModel::Serializer
         min_expiration: PollValidator::MIN_EXPIRATION,
         max_expiration: PollValidator::MAX_EXPIRATION,
       },
+      emoji_reactions: {
+        max_reactions: 32767,
+        max_reactions_per_account: 1,
+      },
     }
   end
 
@@ -101,6 +105,8 @@ class REST::V1::InstanceSerializer < ActiveModel::Serializer
   def fedibird_capabilities
     capabilities = [
       :emoji_reaction,
+      :enable_wide_emoji,
+      :enable_wide_emoji_reaction,
     ]
 
     capabilities << :profile_search unless Chewy.enabled?
